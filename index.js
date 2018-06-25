@@ -14,7 +14,12 @@ app.set('views', path.join(__dirname, 'views'))
 
 app.get('/', (request, response) => {
   response.render('home', {
-    name: 'Kutasie'
+    name: 'Kutasie',
+    nice: function niceOrNot (){
+      let chance = Math.random(); 
+      chance >0.5? string ='nice': string = 'not nice';
+      return string;
+    }
   })
 })
 app.listen(port, (err) => {
