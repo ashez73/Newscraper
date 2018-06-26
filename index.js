@@ -1,7 +1,10 @@
-const path = require('path')
-const express = require('express')
-const exphbs = require('express-handlebars')
-const onetScrape = require('./js/apptest')
+const path = require('path');
+const express = require('express');
+const exphbs = require('express-handlebars');
+const onetScrape = require('./js/apptest');
+const data = onetScrape.scrape().then(function (result) {
+  console.log(result);
+
 
 const app = express()
 const port = 3000;
@@ -12,6 +15,7 @@ app.engine('.hbs', exphbs({
 }))
 app.set('view engine', '.hbs')
 app.set('views', path.join(__dirname, 'views'))
+app.use(express.static('public'))
 
 app.get('/on', (request, response) => {
   response.render('test', {
@@ -31,10 +35,12 @@ app.get('/', (request, response) => {
       let chance = Math.random(); 
       chance >0.5? string ='nice': string = 'not nice';
       return string;},
-    displayData: onetScrape.myData.title
+    displayData: result.title
+    //displayData: ohetScrape.title
+    
  
   })
- 
+  console.log(onetScrape.title);
 })
 
 
@@ -46,3 +52,4 @@ app.listen(port, (err) => {
 
   console.log(`server is listening on ${port}`)
 })
+});

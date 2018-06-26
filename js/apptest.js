@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 const onet = require('./onet');
 
-  let scrape = async () => {
+exports.scrape = async () => {
   const browser = await puppeteer.launch({headless: true});
   const page = await browser.newPage();
   await page.goto(onet.url);
@@ -20,14 +20,12 @@ const onet = require('./onet');
   };
 
   let shortenMe = array => {
-    
     let index = array.indexOf("''");
-    if (index !== -1 && array[index].length < 4){array.splice(index, 1)}
+    if (index !== -1 && array[index].length < 4) { array.splice(index, 1); }
     if (array.length > 16) { array.length = 16; }
   };
 
   shortenMe(textsArrayRaw);
-  
   linksArrayRaw = trimMe(linksArrayRaw);
   shortenMe(linksArrayRaw);
 
@@ -59,9 +57,3 @@ output.json = json;
 output.title = textsArrayRaw;
 return output;
 };
-module.export = scrape();
-let onetScrape = scrape().then(function(onetScrape){
- // console.log (onetScrape);
- // const exportMe = onetScrape;
- exports.myData = onetScrape;
-});
