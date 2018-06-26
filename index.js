@@ -1,7 +1,7 @@
 const path = require('path');
 const express = require('express');
 const exphbs = require('express-handlebars');
-const onetScrape = require('./js/apptest');
+let onetScrape = require('./js/apptest');
 const data = onetScrape.scrape().then(function (result) {
   console.log(result);
 
@@ -24,7 +24,7 @@ app.get('/on', (request, response) => {
     
  
   })
-
+  onetScrape = require('./js/apptest');
 })
 
 
@@ -35,12 +35,14 @@ app.get('/', (request, response) => {
       let chance = Math.random(); 
       chance >0.5? string ='nice': string = 'not nice';
       return string;},
-    displayData: result.title
+    displayData: result.title,
+    displayTime: result.time
     //displayData: ohetScrape.title
     
  
   })
-  console.log(onetScrape.title);
+
+
 })
 
 
@@ -53,3 +55,4 @@ app.listen(port, (err) => {
   console.log(`server is listening on ${port}`)
 })
 });
+
