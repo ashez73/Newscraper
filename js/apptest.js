@@ -27,11 +27,14 @@ let scrape = async () => {
 let routObj = setup.routingSetUp();
 let port = routObj.port;
 let app = routObj.app;
-
-scrape().then(function (result) {
-  console.log(result.title);
-
-  app.get('/', (request, response) => {
+let getData = {
+  text: '',
+  time: ''
+};
+app.get('/', (request, response) => {
+  scrape().then(function (result) {
+    console.log(result);
+    
     response.render('home', {
       name: 'Kutasie',
       nice: function niceOrNot () {
@@ -40,12 +43,10 @@ scrape().then(function (result) {
         chance > 0.5 ? string = 'nice' : string = 'not nice';
         return string;
       },
-      displayData: result.title,
-      displayTime: result.time
+      displayData: result
     });
   });
 });
-
 app.listen(port, (err) => {
   if (err) {
     return console.log('something bad happened', err);
