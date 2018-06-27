@@ -1,9 +1,11 @@
-<h2>Hello {{name}}</h2>
-<h2>{{nice}} to meet you</h2>
+<!--<h2>Hello {{name}}</h2>
+-->
 <div class="entry">
-{{displayTime}}
+<h5>Źródło: <span class = "portal">{{displayTarget}}</span></h5>
+<div class ="insert">POZYSKANO: {{formatDate}}</div>
+<ul>
 {{#each displayData}}
 <li>{{this}}</li>
 {{/each}}
-
+</ul>
 </div>

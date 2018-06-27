@@ -20,14 +20,12 @@ const onet = require('./onet');
   };
 
   let shortenMe = array => {
-    
     let index = array.indexOf("''");
     if (index !== -1 && array[index].length < 4) { array.splice(index, 1); }
     if (array.length > 16) { array.length = 16; }
   };
 
   shortenMe(textsArrayRaw);
-  
   linksArrayRaw = trimMe(linksArrayRaw);
   shortenMe(linksArrayRaw);
 

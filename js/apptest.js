@@ -27,23 +27,22 @@ let scrape = async () => {
 let routObj = setup.routingSetUp();
 let port = routObj.port;
 let app = routObj.app;
-let getData = {
-  text: '',
-  time: ''
-};
 app.get('/', (request, response) => {
   scrape().then(function (result) {
     console.log(result);
-    
     response.render('home', {
-      name: 'Kutasie',
-      nice: function niceOrNot () {
-        let chance = Math.random();
-        let string;
-        chance > 0.5 ? string = 'nice' : string = 'not nice';
-        return string;
+      name: '',
+      formatDate: function () {
+        let month = result.time.getMonth() + 1;
+        month = ('0' + month.toString()).slice(-2);
+        let day = ('0' + result.time.getDate().toString()).slice(-2);
+        let hour = ('0' + result.time.getHours().toString()).slice(-2);
+        let minute = ('0' + result.time.getMinutes().toString()).slice(-2);
+        let year = result.time.getFullYear();
+        return `${day}.${month}.${year}  ${hour}:${minute}`;
       },
-      displayData: result
+      displayTarget: 'onet.pl',
+      displayData: result.title
     });
   });
 });
