@@ -3,19 +3,20 @@
 console.log('Hello');
 const url = 'http://localhost:3000/data/';
 const responseContainer = document.querySelector('ul');
-let html_content ='';
+let html_content = '';
+let html_content2 = '';
 
 fetch(('http://localhost:3000/data/'),
-{
-  //body:JSON.stringify(data),
-  headers: {
-    Authorization: 'd136'
-  }
-})
-.then(response => response.json())
-.then(addData)
-.then(listenersOn)
-.catch(err => requestError(err, 'data'));
+  {
+    //body:JSON.stringify(data),
+    headers: {
+      Authorization: 'd136'
+    }
+  })
+  .then(response => response.json())
+  .then(addData)
+  .then(listenersOn)
+  .catch(err => requestError(err, 'data'));
 /*
 fetch(url,
   {
@@ -27,38 +28,38 @@ fetch(url,
   .catch(err => requestError(err, 'data'));
 */
 function addData(data) {
-  console.log ('ok');
+  console.log('ok');
   //let htmlContent = '';
   let mydata = data;
-  console.log (data);
-  console.log(data.newsFeed[0]);
-
-  //for (let x =0; x < data.newsFeed.length; x++)
+  
 
 
   //if (mydata) {
-      htmlContent = data.newsFeed.map(article=>`
-      <li class = 'article-list'>${article.title}</li>`
-      ).join('');
-      
- // } else {
-     // htmlContent = 'Unfortunately, no image was returned for your search.';
- // }
-responseContainer.insertAdjacentHTML('beforeend', htmlContent);
-for (let entry(value, index) of data.newsFeed)
-{
+  html_content = data.newsFeed.map(article=>`
+  <li class = 'article-list'>${article.title}</li>`).join('');
+
+  // } else {
+  //html_content = 'Unfortunately, no image was returned for your search.';
+  // }
+  
+  responseContainer.insertAdjacentHTML('beforeend', html_content);
+  //console.log(data.newsFeed.length);
+  let arrayLen = data.newsFeed.length;
+  return arrayLen;
+
+  //console.log(html_content2);
 
 }
+function requestError(err, part) {
+  console.log(err);
+  //responseContainer.insertAdjacentHTML('beforeend', `<p class="network-warning">Oh no! There was an error making a request for the ${part}.</p>`);
+}
 
-      }
-      function requestError(err, part) {
-        console.log(err);
-        //responseContainer.insertAdjacentHTML('beforeend', `<p class="network-warning">Oh no! There was an error making a request for the ${part}.</p>`);
-    }
-   
-    function listenersOn () {
-    document.querySelectorAll("li")[0].addEventListener("click", function ohnoes(){
+function listenersOn(arrayLen) {
+  console.log(arrayLen);
+  for (let l = 0; l < arrayLen; l++) {
+    document.querySelectorAll("li")[l].addEventListener("click", function ohnoes() {
       console.log('ok');
-    }); 
-    }
-    
+    });
+  }
+}
