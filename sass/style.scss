@@ -6,91 +6,74 @@ $secondary: #c62828;
 $secondary-dark: #8e0000;
 $secondary-light: #ff5f52;
 
+
 html, body
 {
-    margin: 0;
-    padding: 0;
+margin: 0;
+padding: 0;
 }
 
 html {
   width:100%;
   height:100%;
-  //margin:auto;
   background-color:lightgray;
   font-size: 1rem;
- // background-image: url("/img/33.jpg");
-  //background-repeat: no-repeat;
-  //background-size: cover;
-
 }
-
 body {
- // background-color:#fff;
   font-family: 'Roboto', sans-serif;
   font-size: 0.9rem;
   color: #000;
- // text-shadow: rgba(0,0,0,.01) 0 0 1px;
-  
-  //background: -moz-linear-gradient(to bottom right,#ddd, #fff);
 }
-
-li {
-  
-  list-style-type: none;
-  padding:3px 20px;
-  margin:0;
-  overflow:hidden;
-  background-color: white;
-  border-bottom: 1px solid #f3f3f3;
+.entry {
+  margin:auto;
+  max-width: 30%;
   position:relative;
-  cursor: context-menu;
-  transition: background-color 2s;
-  text-align:left;
-
+  background-color:#f3f3f3;
+  border-radius: 2%;
+  box-shadow: 2px 2px 4px 2px #bbb;
+  text-align: center;
   
-  //transition: color 1s;
+   li {
+      list-style-type: none;
+      padding: 3px 20px;
+      margin: 0;
+      background-color: white;
+      border-bottom: 1px solid #f3f3f3;
+      position: relative;
+      cursor: context-menu;
+      -webkit-transition: background-color 2s;
+      transition: background-color 2s;
+      text-align: left; 
+    }
+    li:hover {
+      background-color: $primary;
+      color: white;
+    }
+    li::before {
+      content: "\00BB";
+      content: "\1F892";
+      position:relative;
+      left: -8px;
+      color: #c62828;
+    }
+    li:hover::before {
+      color:white;
+    }
+    li:first-of-type {
+      border-top: 2px solid #c62828;
+    }
+    li:last-of-type {
+      border-bottom: 2px solid #c62828;
+    }
+    ul {
+      margin:10px;
+      padding:10px;
+    }
 
-  //list-style-type: square;
 }
 
-li::before {
-    content: "\00BB";
-    content: "\1F892";
-    position:relative;
-    left: -8px;
-    //width: 30px;
-    //height: 10px;
-    color: #c62828;
-    //color: #0095a8;
-}
 
-li:hover {
-  background-color: #0095a8;
-  //background-color:#8e0000;
-  //background-color:#c62828;
-  color:white;
-}  
 
-li:hover::before {
-  color:white;
-}
-
-li:first-of-type {
-  border-top: 2px solid #c62828;
-  
-  
-}
-li:last-of-type {
-  border-bottom: 2px solid #c62828;
-  //border-bottom: 3px solid #0095a8;
-  
-  
-  
-}
-ul {
-  margin:10px;
-  padding:10px;
-}
 
 h3, h4 {
   padding: 5px 15px;
@@ -124,21 +107,7 @@ h6 {
 p {
   padding: 5px 15px;
 }
-.entry {
-  margin:auto;
-  max-width: 30%;
-  position:relative;
-  overflow:hidden;
-  //padding:0;
-  //margin:0;
-  text-align:center;
-  background-color:#f3f3f3;
-  border-radius: 2%;
-  //border-top: 1px solid #bbb;
-  //border-left: 1px solid #bbb;
-  box-shadow: 2px 2px 4px 2px #bbb;
-  
-  }
+
 .portal {
     //text-transform: uppercase;
     //color: white;

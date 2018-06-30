@@ -46,6 +46,34 @@ app.get('/', (request, response) => {
     });
   });
 });
+
+app.get('/lolxd', (request, response) => {
+  scrape().then(function (result) {
+    console.log(result);
+    response.render('test', {
+      name: '',
+      formatDate: function () {
+        let month = result.time.getMonth() + 1;
+        month = ('0' + month.toString()).slice(-2);
+        let day = ('0' + result.time.getDate().toString()).slice(-2);
+        let hour = ('0' + result.time.getHours().toString()).slice(-2);
+        let minute = ('0' + result.time.getMinutes().toString()).slice(-2);
+        let year = result.time.getFullYear();
+        return `${day}.${month}.${year}  ${hour}:${minute}`;
+      }
+      // displayTarget: 'onet.pl',
+      // displayData: result.title
+    });
+  });
+});
+
+app.get('/data', (request, response) => {
+  scrape().then(function (result) {
+    console.log(result);
+    response.send(result.json);
+  });
+});
+
 app.listen(port, (err) => {
   if (err) {
     return console.log('something bad happened', err);
