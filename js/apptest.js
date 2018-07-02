@@ -14,7 +14,7 @@ let scrape = async () => {
   onet.shortenMe(textsArrayRaw);
   linksArrayRaw = onet.trimMe(linksArrayRaw);
   onet.shortenMe(linksArrayRaw);
-  let myJson = helpers.combineObj(textsArrayRaw, linksArrayRaw);
+  let myJson = helpers.combineObj(textsArrayRaw, linksArrayRaw, 'newsFeed');
   browser.close();
   let output = {
     json: myJson,
@@ -59,7 +59,7 @@ let scrapeLink = async (req) => {
     let text = document.querySelector('#lead').innerText;
     return text;
   });
-  const paragraphArrayRaw = await pagelink.evaluate(() => [...document.querySelectorAll('#detail > .hyphenate')].map(elem => elem.innerText));
+  const paragraphArrayRaw = await pagelink.evaluate(onet.article);
   paragraphArrayRaw.pop();
   paragraphArrayRaw.unshift(leadText);
   articlesArray.push(paragraphArrayRaw);

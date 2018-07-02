@@ -1,7 +1,7 @@
 module.exports = {
   combineObj: function (...args) {
   /* combine arrays into JSON object */
-    function Entry (title, link) {
+    function Entry (title, link, objwrap) {
       this.title = title;
       this.link = link;
     };
