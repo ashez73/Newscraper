@@ -2,6 +2,7 @@
 
 console.log('Hello');
 const url = 'http://localhost:3000/data/';
+const urlLink ='http://localhost:3000/link/';
 const responseContainer = document.querySelector('ul');
 let html_content = '';
 let html_content2 = '';
@@ -36,7 +37,7 @@ function addData(data) {
 
   //if (mydata) {
   html_content = data.newsFeed.map(article=>`
-  <li class = 'article-list'>${article.title}</li>`).join('');
+  <li class = 'article-list' data-link= "${article.link}">${article.title}</li>`).join('');
 
   // } else {
   //html_content = 'Unfortunately, no image was returned for your search.';
@@ -59,7 +60,14 @@ function listenersOn(arrayLen) {
   console.log(arrayLen);
   for (let l = 0; l < arrayLen; l++) {
     document.querySelectorAll("li")[l].addEventListener("click", function ohnoes() {
-      console.log('ok');
+      controller.getText(this.dataset.link)
     });
   }
+}
+let controller = {
+getText: function (myData) {
+console.log(myData);
+console.log(`${urlLink}?link=${myData}`);
+fetch (`${urlLink}?link=${myData}`);
+}
 }

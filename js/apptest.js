@@ -47,9 +47,28 @@ app.get('/', (request, response) => {
   });
 });
 
+let scrapeLink = async (req) => {
+  const browser = await puppeteer.launch({headless: true});
+  const page = await browser.newPage();
+  await page.goto(req);
+  let articlesArray = [];
+  let pagelink = [];
+  pagelink = await browser.newPage();
+  await pagelink.goto(req);
+  let leadText = await pagelink.evaluate(() => {
+    let text = document.querySelector('#lead').innerText;
+    return text;
+  });
+  const paragraphArrayRaw = await pagelink.evaluate(() => [...document.querySelectorAll('#detail > .hyphenate')].map(elem => elem.innerText));
+  paragraphArrayRaw.pop();
+  paragraphArrayRaw.unshift(leadText);
+  articlesArray.push(paragraphArrayRaw);
+  return paragraphArrayRaw;
+};
+
 app.get('/lolxd', (request, response) => {
   scrape().then(function (result) {
-    console.log(result);
+    //console.log(result);
     response.render('test', {
       name: '',
       formatDate: function () {
@@ -69,10 +88,22 @@ app.get('/lolxd', (request, response) => {
 
 app.get('/data', (request, response) => {
   scrape().then(function (result) {
+    //console.log(result);
+    response.send(result.json);
+  });
+});
+
+
+app.get('/link', (request, response) => {
+  let req = request.query.link;
+  console.log('ok');
+
+  scrapeLink(req).then(function (result) {
     console.log(result);
     response.send(result.json);
   });
 });
+
 
 app.listen(port, (err) => {
   if (err) {
