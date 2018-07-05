@@ -3,6 +3,7 @@ const onet = require('./onet');
 const helpers = require('./helpers');
 const setup = require('./routing_setup');
 
+
 let scrape = async () => {
   const browser = await puppeteer.launch({headless: true});
   const page = await browser.newPage();
@@ -14,7 +15,7 @@ let scrape = async () => {
   onet.shortenMe(textsArrayRaw);
   linksArrayRaw = onet.trimMe(linksArrayRaw);
   onet.shortenMe(linksArrayRaw);
-  let myJson = helpers.combineObj(textsArrayRaw, linksArrayRaw, 'newsFeed');
+  let myJson = helpers.combineObj(textsArrayRaw, linksArrayRaw);
   browser.close();
   let output = {
     json: myJson,
@@ -51,7 +52,6 @@ let scrapeLink = async (req) => {
   const browser = await puppeteer.launch({headless: true});
   const page = await browser.newPage();
   await page.goto(req);
-  let articlesArray = [];
   let pagelink = [];
   pagelink = await browser.newPage();
   await pagelink.goto(req);
@@ -59,11 +59,13 @@ let scrapeLink = async (req) => {
     let text = document.querySelector('#lead').innerText;
     return text;
   });
-  const paragraphArrayRaw = await pagelink.evaluate(onet.article);
+  let paragraphArrayRaw = await pagelink.evaluate(onet.article);
   paragraphArrayRaw.pop();
   paragraphArrayRaw.unshift(leadText);
-  articlesArray.push(paragraphArrayRaw);
-  return paragraphArrayRaw;
+  // articlesArray.push(paragraphArrayRaw);
+  let myJson = helpers.objectifyArticle(paragraphArrayRaw);
+  browser.close();
+  return myJson;
 };
 
 app.get('/lolxd', (request, response) => {
@@ -96,11 +98,11 @@ app.get('/data', (request, response) => {
 
 app.get('/link', (request, response) => {
   let req = request.query.link;
-  console.log('ok');
+  //console.log('ok');
 
   scrapeLink(req).then(function (result) {
     console.log(result);
-    response.send(result.json);
+    response.send(result);
   });
 });
 

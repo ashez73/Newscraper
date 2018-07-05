@@ -1,7 +1,7 @@
 module.exports = {
   combineObj: function (...args) {
-  /* combine arrays into JSON object */
-    function Entry (title, link, objwrap) {
+    /* combine arrays into JSON object */
+    function Entry (title, link) {
       this.title = title;
       this.link = link;
     };
@@ -12,6 +12,18 @@ module.exports = {
       master.push(entry);
     }
     wrapper.newsFeed = master;
+    return JSON.stringify(wrapper);
+  },
+  objectifyArticle: function (article) {
+    let master = [];
+    let wrapper = {};
+    for (let x = 0; x < article.length; x++) {
+      let entry = {
+        article: article[x]
+      };
+      master.push(entry);
+    }
+    wrapper.articleEntry = master;
     return JSON.stringify(wrapper);
   }
 };
