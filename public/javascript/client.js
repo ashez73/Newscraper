@@ -28,7 +28,7 @@ fetch(url,
   .catch(err => requestError(err, 'data'));
 */
 function addData(data) {
-  console.log(data);
+  //console.log(data);
   //let htmlContent = '';
   let mydata = data;
 
@@ -59,23 +59,70 @@ function requestError(err, part) {
 function listenersOn(arrayLen) {
   //console.log(arrayLen);
   for (let l = 0; l < arrayLen; l++) {
-    document.querySelectorAll("li")[l].addEventListener("click", function ohnoes() {
-      controller.getText(this.dataset.link)
+    document.querySelectorAll(".article-list")[l].addEventListener("click", function ohnoes() {
+      controller.caller = l;
+      let elem = this.querySelector('.article-content');
+      if (elem) {
+        if (window.getComputedStyle(elem, null).getPropertyValue("display")==='none'){
+          elem.style.display = "inline-block";
+        }
+        else {
+          elem.style.display = "none";
+        }
+      console.log('ma');
+      }
+      else {
+      //hide current article if any
+      controller.getArticle(this.dataset.link)
+      }
     });
   }
 }
+
+
+
+
+let model = {
+  article_content: '',
+  articleSelector: ''
+}
+
+let view = {
+  triggerLink: '',
+  renderArticle: function () {
+    triggerLink = controller.callerContainer;
+    triggerLink.insertAdjacentHTML('beforeend', model.article_content);
+  },
+  adjustTriggerColors: function () {
+    triggerLink.style.backgroundColor = "#56c8d8";
+    triggerLink.style.color = "white";
+
+  },
+  //hide rather than remove for caching
+  hideArticle: function () {
+    if (typeof triggerLink !== 'undefined'){
+    triggerLink.querySelector('.article-content').style.display = "none";
+    }
+  }
+}
+
+
 let controller = {
-  getText: function (myData) {
-    //console.log(myData);
-    //console.log(`${urlLink}?link=${myData}`);
+  caller: 0,
+  callerContainer: '',
+  getArticle: function (myData) {
     fetch(`${urlLink}?link=${myData}`)
       .then(response => response.json())
+      //.then(view.hideArticle)
       .then(this.addArticle)
+      .then(view.renderArticle)
+      .then(view.adjustTriggerColors);
   },
-  addArticle: function (data) {
-    
-    article_content = data.articleEntry.map(article => `
-    <li class = 'article-content'>${article.article}</li>`).join('');
-    console.log(article_content);
+  addArticle: data => {
+    model.article_content = data.articleEntry.map(articles => `
+    <p class = "article-part">${articles.article}</p>`).join('');
+    model.article_content = "<ul class ='article-content'>" + model.article_content + "</ul>";
+    controller.callerContainer = document.querySelectorAll(".article-list")[controller.caller];
+    //console.log ("caller: "+ controller.caller + "cont: " + model.article_content);
   }
 }

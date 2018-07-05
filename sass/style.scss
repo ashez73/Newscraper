@@ -1,89 +1,129 @@
 $primary: #0097a7;
 $primary-dark: #006978;
 $primary-light: #56c8d8;
-
 $secondary: #c62828;
 $secondary-dark: #8e0000;
 $secondary-light: #ff5f52;
-
-
-html, body
-{
-margin: 0;
-padding: 0;
+$primarybground: white;
+$ink: black;
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 
 html {
-  width:100%;
-  height:100%;
-  background-color:lightgray;
+  width: 100%;
+  height: 100%;
+  background-color: lightgray;
   font-size: 1rem;
 }
+
 body {
   font-family: 'Roboto', sans-serif;
   font-size: 0.9rem;
   color: #000;
+  -webkit-font-smoothing: antialiased;
+  font-family: 'Haelvetica', sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
+
+
 .entry {
-  margin:auto;
+  margin: auto;
   max-width: 40%;
-  position:relative;
-  background-color:#f3f3f3;
+  position: relative;
+  background-color: #f3f3f3;
   border-radius: 5px;
   box-shadow: 2px 2px 4px 2px #bbb;
   text-align: center;
+}
+li {
+  list-style-type: none;
+}
+li.article-list {
   
-   li {
-      list-style-type: none;
-      padding: 3px 20px;
-      margin: 0;
-      background-color: white;
-      border-bottom: 1px solid #f3f3f3;
-      position: relative;
-      cursor: context-menu;
-      -webkit-transition: background-color 2s;
-      transition: background-color 2s;
-      text-align: left; 
-    }
-    li:hover {
-      background-color: $primary;
-      color: white;
-    }
-    li::before {
-      content: "\00BB";
-      content: "\1F892";
-      position:relative;
-      left: -8px;
-      color: #c62828;
-    }
-    li:hover::before {
-      color:white;
-    }
-    li:first-of-type {
-      border-top: 2px solid #c62828;
-    }
-    li:last-of-type {
-      border-bottom: 2px solid #c62828;
-    }
-    ul {
-      margin:10px;
-      padding:10px;
-    }
+  padding: 3px 20px;
+  margin: 0;
+  background-color: white;
+  border-bottom: 1px solid #f3f3f3;
+  position: relative;
+  cursor: context-menu;
+  -webkit-transition: background-color 2s;
+  transition: background-color 2s;
+  text-align: left;
+}
 
+li.article-list:hover {
+  background-color: $primary;
+  color: white;
+}
+
+li::before {
+  content: "\00BB";
+  content: "\1F892";
+  position: relative;
+  left: -8px;
+  color: #c62828;
+}
+
+li:hover::before {
+  color: white;
+}
+
+li:first-of-type {
+  border-top: 2px solid #c62828;
+}
+
+li:last-of-type {
+  border-bottom: 2px solid #c62828;
+}
+
+li.article-part {
+  //list-style-type: none;
+}
+
+li.article-part::before {
+  content: '';
 }
 
 
+ul {
+  margin: 10px;
+  padding: 10px;
+}
 
+ul.article-content {
+  background-color: $primarybground;
+  color: $ink;
+ 
+  //overflow: auto;
+  //height: 20rem;
+}
 
-h3, h4 {
+ul.article-content :hover {
+  background-color: $primarybground;
+}
+
+p.article-part{
+padding: 0.2rem;
+margin: 0.2rem;
+text-align: justify;
+}
+p.article-part:first-of-type {
+  font-weight: 600;
+  
+}
+
+h3,
+h4 {
   padding: 5px 15px;
 }
 
 h4 {
   font-size: 2rem;
-  margin:0 20px;
-  font-family: 'Frijole', cursive;
-  //padding: 4px 20px;
+  margin: 0 20px;
+  font-family: 'Frijole', cursive; //padding: 4px 20px;
 }
 
 h3 {
@@ -92,7 +132,7 @@ h3 {
 
 h5 {
   font-size: 1.5rem;
-  margin:0 20px;
+  margin: 0 20px;
   padding: 3px 20px;
   font-weight: 400;
   text-align: center;
@@ -100,36 +140,32 @@ h5 {
 
 h6 {
   font-size: 1.25rem;
-  margin:0 20px;
+  margin: 0 20px;
   padding: 3px 20px;
   font-weight: 500;
 }
-p {
-  padding: 5px 15px;
-}
+
 
 .portal {
-    //text-transform: uppercase;
-    //color: white;
-   // background-color:#006978;
-    padding: 1px 3px;
+  //text-transform: uppercase;
+  //color: white;
+  // background-color:#006978;
+  padding: 1px 3px;
 }
+
 header {
   //margin: 0;
-  margin-bottom: 20px;
-  //padding:0;
-  height:90px;
- // width: 100%;
-  background-color:$primary-dark;
-  //font-family: 'Frijole', cursive;
+  margin-bottom: 20px; //padding:0;
+  height: 90px; // width: 100%;
+  background-color: $primary; //font-family: 'Frijole', cursive;
   text-align: center;
   color: white;
   border-bottom: 1px solid white;
-  
 }
+
 .insert {
-//background-color: white;
-max-width:50%;
-margin:auto;
-color:$primary-dark;
+  //background-color: white;
+  max-width: 50%;
+  margin: auto;
+  color: $primary-dark;
 }
