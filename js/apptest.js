@@ -30,7 +30,7 @@ let port = routObj.port;
 let app = routObj.app;
 app.get('/', (request, response) => {
   scrape().then(function (result) {
-    console.log(result);
+    //console.log(result);
     response.render('home', {
       name: '',
       formatDate: function () {

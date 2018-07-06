@@ -41,7 +41,7 @@ li.article-list {
   text-align: left; }
 
 li.article-list:hover {
-  background-color: #0097a7;
+  background-color: #007e8a;
   color: white; }
 
 li::before {
@@ -49,16 +49,16 @@ li::before {
   content: "\1F892";
   position: relative;
   left: -8px;
-  color: #c62828; }
+  color: #ee020a; }
 
 li:hover::before {
   color: white; }
 
 li:first-of-type {
-  border-top: 2px solid #c62828; }
+  border-top: 2px solid #ee020a; }
 
 li:last-of-type {
-  border-bottom: 2px solid #c62828; }
+  border-bottom: 2px solid #ee020a; }
 
 li.article-part::before {
   content: ''; }
@@ -69,7 +69,10 @@ ul {
 
 ul.article-content {
   background-color: #fff;
-  color: #000; }
+  color: #000;
+  opacity: 1;
+  -webkit-transition: opacity 2s;
+  transition: opacity 2s; }
 
 ul.article-content :hover {
   background-color: #fff; }
@@ -112,7 +115,7 @@ h6 {
 header {
   margin-bottom: 20px;
   height: 90px;
-  background-color: #0097a7;
+  background-color: #007e8a;
   text-align: center;
   color: white;
   border-bottom: 1px solid white; }
@@ -120,4 +123,4 @@ header {
 .insert {
   max-width: 50%;
   margin: auto;
-  color: #006978; }
+  color: #007e8a; }

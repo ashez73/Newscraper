@@ -17,16 +17,7 @@ fetch(('http://localhost:3000/data/'), {
   .then(addData)
   .then(listenersOn)
   .catch(err => requestError(err, 'data'));
-/*
-fetch(url,
-  {
-    headers: {
-      Authorization: 'd136'
-    }
-  }).then(response => response.json())
-  .then(addData)
-  .catch(err => requestError(err, 'data'));
-*/
+
 function addData(data) {
   //console.log(data);
   //let htmlContent = '';
@@ -57,28 +48,27 @@ function requestError(err, part) {
 }
 
 function listenersOn(arrayLen) {
-  //console.log(arrayLen);
-  for (let l = 0; l < arrayLen; l++) {
-    document.querySelectorAll(".article-list")[l].addEventListener("click", function ohnoes() {
-      controller.caller = l;
-      let elem = this.querySelector('.article-content');
-      if (elem) {
-        if (window.getComputedStyle(elem, null).getPropertyValue("display") === 'none') {
-          view.hide();
-          elem.style.display = "inline-block";
-        } else {
-         view.hide();
-        }
-        console.log('ma');
-      } else {
-        //hide current article if any
+  for (let lis = 0; lis < arrayLen; lis++) {
+    document.querySelectorAll(".article-list")[lis].addEventListener("click", function ohnoes() {
+        controller.caller.num = lis;
+        controller.switchState();
+        console.log(controller.caller.num);
+        //hide any visible article -this is how they are cached
         view.hide();
+        let elem = this.querySelector('.article-content');
+        if (elem) {
+          if (controller.caller.state === 1) {
+            elem.style.display = "inline-block";
+          } else {
+            elem.style.display = "none";
+          }
+        }
+        else {
         controller.getArticle(this.dataset.link);
-      }
-    });
-  }
+        }
+      });
+    };
 }
-
 
 
 
@@ -94,7 +84,7 @@ let view = {
     triggerLink.insertAdjacentHTML('beforeend', model.article_content);
   },
   adjustTriggerColors: function () {
-    triggerLink.style.backgroundColor = "#56c8d8";
+    triggerLink.style.backgroundColor = "#00aeba";
     triggerLink.style.color = "white";
 
   },
@@ -114,7 +104,13 @@ let view = {
 
 
 let controller = {
-  caller: 0,
+  caller: {
+    num: 0,
+    state: 0
+  },
+  switchState: function () {
+    this.caller.state === 0 ? this.caller.state = 1 : this.caller.state = 0;
+  },
   callerContainer: '',
   getArticle: function (myData) {
     fetch(`${urlLink}?link=${myData}`)
@@ -128,7 +124,8 @@ let controller = {
     model.article_content = data.articleEntry.map(articles => `
     <p class = "article-part">${articles.article}</p>`).join('');
     model.article_content = "<ul class ='article-content'>" + model.article_content + "</ul>";
-    controller.callerContainer = document.querySelectorAll(".article-list")[controller.caller];
+    controller.callerContainer = document.querySelectorAll(".article-list")[controller.caller.num];
+    controller.caller.state = 1;
     //console.log ("caller: "+ controller.caller + "cont: " + model.article_content);
   }
 }

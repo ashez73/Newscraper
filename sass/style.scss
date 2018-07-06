@@ -1,9 +1,9 @@
-$primary: #0097a7;
-$primary-dark: #006978;
-$primary-light: #56c8d8;
-$secondary: #c62828;
-$secondary-dark: #8e0000;
-$secondary-light: #ff5f52;
+$primary: #00aeba;
+$primary-dark: #007e8a;
+$primary-light: #5ce0ec;
+$secondary: #ee020a;
+$secondary-dark: #b20000;
+$secondary-light: #ff573a;
 $primarybground: white;
 $ink: black;
 html,
@@ -37,6 +37,7 @@ body {
   border-radius: 5px;
   box-shadow: 2px 2px 4px 2px #bbb;
   text-align: center;
+  
 }
 li {
   list-style-type: none;
@@ -55,7 +56,7 @@ li.article-list {
 }
 
 li.article-list:hover {
-  background-color: $primary;
+  background-color: $primary-dark;
   color: white;
 }
 
@@ -64,7 +65,7 @@ li::before {
   content: "\1F892";
   position: relative;
   left: -8px;
-  color: #c62828;
+  color: $secondary;
 }
 
 li:hover::before {
@@ -72,11 +73,11 @@ li:hover::before {
 }
 
 li:first-of-type {
-  border-top: 2px solid #c62828;
+  border-top: 2px solid $secondary;
 }
 
 li:last-of-type {
-  border-bottom: 2px solid #c62828;
+  border-bottom: 2px solid $secondary;
 }
 
 li.article-part {
@@ -96,6 +97,8 @@ ul {
 ul.article-content {
   background-color: $primarybground;
   color: $ink;
+  opacity: 1;
+  transition: opacity 2s;
  
   //overflow: auto;
   //height: 20rem;
@@ -157,7 +160,7 @@ header {
   //margin: 0;
   margin-bottom: 20px; //padding:0;
   height: 90px; // width: 100%;
-  background-color: $primary; //font-family: 'Frijole', cursive;
+  background-color: $primary-dark; //font-family: 'Frijole', cursive;
   text-align: center;
   color: white;
   border-bottom: 1px solid white;
