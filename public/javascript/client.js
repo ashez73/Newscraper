@@ -50,31 +50,41 @@ function requestError(err, part) {
 function listenersOn(arrayLen) {
   for (let lis = 0; lis < arrayLen; lis++) {
     document.querySelectorAll(".article-list")[lis].addEventListener("click", function ohnoes() {
-        controller.caller.num = lis;
+      let elem = this.querySelector('.article-content');
+      controller.caller.num = lis;
+      //view.hide();
+      //console.log(controller.caller.num);
+      //hide any visible article -this is how they are cached
+      if (elem) {
+        if (getComputedStyle(elem, null).display === 'none') {
+          view.hide();
+          elem.style.display = "inline-block";
+          view.paintActive(this);
+
+
+        } else {
+          elem.style.display = "none";
+          view.paintVisited(this)
+        }
         controller.switchState();
-        console.log(controller.caller.num);
-        //hide any visible article -this is how they are cached
-        view.hide();
-        let elem = this.querySelector('.article-content');
-        if (elem) {
-          if (controller.caller.state === 1) {
-            elem.style.display = "inline-block";
-          } else {
-            elem.style.display = "none";
-          }
-        }
-        else {
+        //view.paintVisited(elem);
+      } else {
         controller.getArticle(this.dataset.link);
-        }
-      });
-    };
+        view.hide();
+
+        //model.activeArticle.style.display = "none";
+      }
+
+    });
+  };
 }
 
 
 
 let model = {
   article_content: '',
-  articleSelector: ''
+  articleSelector: '',
+  activeArticle: {}
 }
 
 let view = {
@@ -96,10 +106,28 @@ let view = {
   },
   hide: function () {
     for (article of document.querySelectorAll("ul.article-content")) {
-      console.log(article);
+      //console.log(article);
       article.style.display = "none";
+      this.paintVisited(article.parentNode);
+
     }
+  },
+  paintActive: function (article) {
+   
+      article.style.backgroundColor = "#00aeba";
+      article.style.color = "white";
+      //article.style.backgroundColor = null;
+      //article.style.color = null;
+      console.log (article);
+    
+    
+  },
+
+  paintVisited: function (node) {
+    node.style.backgroundColor = "white";
+    node.style.color = "DarkCyan";
   }
+
 }
 
 

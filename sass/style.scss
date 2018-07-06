@@ -42,7 +42,7 @@ body {
 li {
   list-style-type: none;
 }
-li.article-list {
+li.article-list, li.article-list-visited {
   
   padding: 3px 20px;
   margin: 0;
@@ -55,9 +55,13 @@ li.article-list {
   text-align: left;
 }
 
-li.article-list:hover {
+li.article-list:hover, li.article-list-visited:hover {
   background-color: $primary-dark;
   color: white;
+}
+
+li.article-list-visited {
+color: DarkCyan;
 }
 
 li::before {

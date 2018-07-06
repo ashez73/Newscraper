@@ -29,7 +29,7 @@ body {
 li {
   list-style-type: none; }
 
-li.article-list {
+li.article-list, li.article-list-visited {
   padding: 3px 20px;
   margin: 0;
   background-color: white;
@@ -40,9 +40,12 @@ li.article-list {
   transition: background-color 2s;
   text-align: left; }
 
-li.article-list:hover {
+li.article-list:hover, li.article-list-visited:hover {
   background-color: #007e8a;
   color: white; }
+
+li.article-list-visited {
+  color: DarkCyan; }
 
 li::before {
   content: "\00BB";
