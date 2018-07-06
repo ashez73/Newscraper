@@ -63,17 +63,17 @@ function listenersOn(arrayLen) {
       controller.caller = l;
       let elem = this.querySelector('.article-content');
       if (elem) {
-        if (window.getComputedStyle(elem, null).getPropertyValue("display")==='none'){
+        if (window.getComputedStyle(elem, null).getPropertyValue("display") === 'none') {
+          view.hide();
           elem.style.display = "inline-block";
+        } else {
+         view.hide();
         }
-        else {
-          elem.style.display = "none";
-        }
-      console.log('ma');
-      }
-      else {
-      //hide current article if any
-      controller.getArticle(this.dataset.link)
+        console.log('ma');
+      } else {
+        //hide current article if any
+        view.hide();
+        controller.getArticle(this.dataset.link);
       }
     });
   }
@@ -100,8 +100,14 @@ let view = {
   },
   //hide rather than remove for caching
   hideArticle: function () {
-    if (typeof triggerLink !== 'undefined'){
-    triggerLink.querySelector('.article-content').style.display = "none";
+    if (typeof triggerLink !== 'undefined') {
+      triggerLink.querySelector('.article-content').style.display = "none";
+    }
+  },
+  hide: function () {
+    for (article of document.querySelectorAll("ul.article-content")) {
+      console.log(article);
+      article.style.display = "none";
     }
   }
 }
