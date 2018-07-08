@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-console.log('Hello');
+console.log('Hello!');
 const url = 'http://localhost:3000/data/';
 const urlLink = 'http://localhost:3000/link/';
 const responseContainer = document.querySelector('ul');
