@@ -90,7 +90,8 @@ let view = {
   renderArticle: function () {
     triggerLink = controller.callerContainer;
     triggerLink.insertAdjacentHTML('beforeend', model.article_content);
-    view.adjustTriggerColors();
+    //view.adjustTriggerColors();
+    view.paintActive(triggerLink);
   },
   adjustTriggerColors: function () {
     //triggerLink.style.backgroundColor = "#00aeba";
