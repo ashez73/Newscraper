@@ -29,16 +29,27 @@ body {
 li {
   list-style-type: none; }
 
-li.article-list, li.article-list-visited {
+li.article-list {
   padding: 3px 20px;
   margin: 0;
-  background-color: white;
   border-bottom: 1px solid #f3f3f3;
   position: relative;
   cursor: context-menu;
   -webkit-transition: background-color 2s;
   transition: background-color 2s;
   text-align: left; }
+
+.standard {
+  background-color: #fff;
+  color: #000; }
+
+.active {
+  background-color: red;
+  color: #fff; }
+
+.visited {
+  background-color: #fff;
+  color: #008b8b; }
 
 li.article-list:hover, li.article-list-visited:hover {
   background-color: #007e8a;

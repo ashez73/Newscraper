@@ -6,6 +6,8 @@ $secondary-dark: #b20000;
 $secondary-light: #ff573a;
 $primarybground: white;
 $ink: black;
+$ink-inv: white;
+$ink-alt: DarkCyan;
 html,
 body {
   margin: 0;
@@ -42,17 +44,31 @@ body {
 li {
   list-style-type: none;
 }
-li.article-list, li.article-list-visited {
+li.article-list {
   
   padding: 3px 20px;
   margin: 0;
-  background-color: white;
+  //background-color: white;
   border-bottom: 1px solid #f3f3f3;
   position: relative;
   cursor: context-menu;
   -webkit-transition: background-color 2s;
   transition: background-color 2s;
   text-align: left;
+}
+
+.standard {
+  background-color: $primarybground;
+  color: $ink;
+}
+.active {
+  background-color: red;
+  color: $ink-inv;
+}
+
+.visited {
+  background-color: $primarybground;
+  color: $ink-alt;
 }
 
 li.article-list:hover, li.article-list-visited:hover {

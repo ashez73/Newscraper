@@ -27,7 +27,7 @@ function addData(data) {
 
   //if (mydata) {
   html_content = data.newsFeed.map(article => `
-  <li class = 'article-list' data-link= "${article.link}">${article.title}</li>`).join('');
+  <li class = 'article-list standard' data-link= "${article.link}">${article.title}</li>`).join('');
 
   // } else {
   //html_content = 'Unfortunately, no image was returned for your search.';
@@ -60,8 +60,6 @@ function listenersOn(arrayLen) {
           view.hide();
           elem.style.display = "inline-block";
           view.paintActive(this);
-
-
         } else {
           elem.style.display = "none";
           view.paintVisited(this)
@@ -92,11 +90,13 @@ let view = {
   renderArticle: function () {
     triggerLink = controller.callerContainer;
     triggerLink.insertAdjacentHTML('beforeend', model.article_content);
+    view.adjustTriggerColors();
   },
   adjustTriggerColors: function () {
-    triggerLink.style.backgroundColor = "#00aeba";
-    triggerLink.style.color = "white";
-
+    //triggerLink.style.backgroundColor = "#00aeba";
+    //triggerLink.style.color = "white";
+    triggerLink.classList.add('active');
+    //triggerLink.classList.add('active');
   },
   //hide rather than remove for caching
   hideArticle: function () {
@@ -112,25 +112,22 @@ let view = {
 
     }
   },
-  paintActive: function (article) {
-   
-      article.style.backgroundColor = "#00aeba";
-      article.style.color = "white";
-      //article.style.backgroundColor = null;
-      //article.style.color = null;
-      console.log (article);
-    
-    
+  paintActive: function (myNode) {
+    console.log();
+   // if (typeof myNode.classList !== 'undefined'){
+    myNode.classList.add('active');
+    myNode.classList.remove('standard');
+    myNode.classList.remove('visited');
+    //}
   },
-
-  paintVisited: function (node) {
-    node.style.backgroundColor = "white";
-    node.style.color = "DarkCyan";
+  paintVisited: function (myNode) {
+   // if (typeof myNode.classList !== 'undefined'){
+    myNode.classList.add('visited');
+    myNode.classList.remove('standard');
+    myNode.classList.remove('active');
+    //}
   }
-
 }
-
-
 let controller = {
   caller: {
     num: 0,
@@ -145,8 +142,7 @@ let controller = {
       .then(response => response.json())
       //.then(view.hideArticle)
       .then(this.addArticle)
-      .then(view.renderArticle)
-      .then(view.adjustTriggerColors);
+      .then(view.renderArticle);
   },
   addArticle: data => {
     model.article_content = data.articleEntry.map(articles => `
@@ -155,5 +151,6 @@ let controller = {
     controller.callerContainer = document.querySelectorAll(".article-list")[controller.caller.num];
     controller.caller.state = 1;
     //console.log ("caller: "+ controller.caller + "cont: " + model.article_content);
+    //return controller.callerContainer;
   }
 }
