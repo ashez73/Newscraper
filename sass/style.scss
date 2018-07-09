@@ -31,14 +31,16 @@ body {
 }
 
 .loader {
-  border: 16px solid #f3f3f3;
+  margin: auto;
+  text-align:center;
+  border: 6px solid $primary-light;
   border-radius: 50%;
-  border-top: 16px solid blue;
-  border-bottom: 16px solid blue;
-  width: 120px;
-  height: 120px;
-  -webkit-animation: spin 2s linear infinite;
-  animation: spin 2s linear infinite;
+  border-top: 6px solid $primary-dark;
+  //border-bottom: 6px solid $primary-light;
+  width: 40px;
+  height: 40px;
+  -webkit-animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite;
 }
 
 @-webkit-keyframes spin {

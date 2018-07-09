@@ -51,6 +51,7 @@ function listenersOn(arrayLen) {
   for (let lis = 0; lis < arrayLen; lis++) {
     document.querySelectorAll(".article-list")[lis].addEventListener("click", function ohnoes() {
       let elem = this.querySelector('.article-content');
+      //controller.caller = this;
       controller.caller.num = lis;
       //view.hide();
       //console.log(controller.caller.num);
@@ -67,7 +68,8 @@ function listenersOn(arrayLen) {
         controller.switchState();
         //view.paintVisited(elem);
       } else {
-        controller.getArticle(this.dataset.link);
+        this.insertAdjacentHTML('beforeend', '<div class ="loader"><div>');
+        controller.getArticle(this.dataset.link,this);
         view.hide();
 
         //model.activeArticle.style.display = "none";
@@ -92,6 +94,7 @@ let view = {
     triggerLink.insertAdjacentHTML('beforeend', model.article_content);
     //view.adjustTriggerColors();
     view.paintActive(triggerLink);
+    controller.removePlaceholder(triggerLink);
   },
   adjustTriggerColors: function () {
     //triggerLink.style.backgroundColor = "#00aeba";
@@ -131,19 +134,25 @@ let view = {
 }
 let controller = {
   caller: {
-    num: 0,
-    state: 0
+    state:0,
+    num: 0
   },
   switchState: function () {
     this.caller.state === 0 ? this.caller.state = 1 : this.caller.state = 0;
   },
   callerContainer: '',
-  getArticle: function (myData) {
+  getArticle: function (myData,myParent) {
     fetch(`${urlLink}?link=${myData}`)
       .then(response => response.json())
       //.then(view.hideArticle)
       .then(this.addArticle)
       .then(view.renderArticle);
+      //.then (this.removePlaceholder(myParent));
+  },
+
+  removePlaceholder: function(myParent){
+    console.log(myParent);
+    myParent.removeChild(myParent.querySelector('.loader'));
   },
   addArticle: data => {
     model.article_content = data.articleEntry.map(articles => `
