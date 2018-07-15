@@ -20,6 +20,7 @@ let scrape = async () => {
   let output = {
     json: myJson,
     title: textsArrayRaw,
+    links: linksArrayRaw,
     time: new Date()
   };
   return output;
@@ -43,7 +44,8 @@ app.get('/', (request, response) => {
         return `${day}.${month}.${year}  ${hour}:${minute}`;
       },
       displayTarget: 'onet.pl',
-      displayData: result.title
+      displayData: result.title,
+      dzionek: helpers.formatDate(result)
     });
   });
 });
@@ -70,20 +72,10 @@ let scrapeLink = async (req) => {
 
 app.get('/lolxd', (request, response) => {
   scrape().then(function (result) {
-    //console.log(result);
-    response.render('test', {
+    response.render('home', {
       name: '',
-      formatDate: function () {
-        let month = result.time.getMonth() + 1;
-        month = ('0' + month.toString()).slice(-2);
-        let day = ('0' + result.time.getDate().toString()).slice(-2);
-        let hour = ('0' + result.time.getHours().toString()).slice(-2);
-        let minute = ('0' + result.time.getMinutes().toString()).slice(-2);
-        let year = result.time.getFullYear();
-        return `${day}.${month}.${year}  ${hour}:${minute}`;
-      }
-      // displayTarget: 'onet.pl',
-      // displayData: result.title
+      displayData: result.json,
+      acquired: helpers.formatDate(result)
     });
   });
 });

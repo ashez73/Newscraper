@@ -1,11 +1,13 @@
 <!--<h2>Hello {{name}}</h2>
 -->
 <div class="entry">
-<h5>Źródło: <span class = "portal">{{displayTarget}}</span></h5>
-<div class ="insert">POZYSKANO: {{formatDate}}</div>
+<h5>Źródło: <span class = "portal">Onet.pl</span></h5>
+<div class ="insert">POZYSKANO: {{acquired}}</div>
 <ul>
-{{#each displayData}}
-<li>{{this}}</li>
-{{/each}}
+  {{#with displayData}}
+  {{#each newsFeed}}
+  <li class = 'article-list standard' data-link ="{{this.link}}">{{this.title}}</li>
+  {{/each}}
+  {{/with}}
 </ul>
 </div>

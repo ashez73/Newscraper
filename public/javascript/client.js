@@ -5,8 +5,8 @@ const url = 'http://localhost:3000/data/';
 const urlLink = 'http://localhost:3000/link/';
 const responseContainer = document.querySelector('ul');
 let html_content = '';
-let html_content2 = '';
-
+let html_content2 = ''; 
+/*
 fetch(('http://localhost:3000/data/'), {
     //body:JSON.stringify(data),
     headers: {
@@ -47,35 +47,48 @@ function requestError(err, part) {
   //responseContainer.insertAdjacentHTML('beforeend', `<p class="network-warning">Oh no! There was an error making a request for the ${part}.</p>`);
 }
 
+function enableListenerBack(li) {
+li.addEventListener("click", listenClick)
+};
+
+let listenClick = function (myEvent) {
+  
+  console.log (myEvent);
+  let fie = document.querySelectorAll(".article-list")[myEvent];
+  console.log(fie);
+  let elem = fie.querySelector('.article-content');
+  //controller.caller = this;
+  //controller.caller.num = lis;
+  //view.hide();
+  //console.log(controller.caller.num);
+  //hide any visible article -this is how they are cached
+  if (elem) {
+    if (getComputedStyle(elem, null).display === 'none') {
+      view.hide();
+      elem.style.display = "inline-block";
+      view.paintActive(fie);
+    } else {
+      elem.style.display = "none";
+      view.paintVisited(fie)
+    }
+    controller.switchState();
+    //view.paintVisited(elem);
+  } else {
+    fie.insertAdjacentHTML('beforeend', '<div class ="loader"><div>');
+    fie.removeEventListener("click", listenClick);
+
+    controller.getArticle(fie.dataset.link,fie);
+    view.hide();
+
+    //model.activeArticle.style.display = "none";
+  }
+}
+
+
 function listenersOn(arrayLen) {
+  console.log(this);
   for (let lis = 0; lis < arrayLen; lis++) {
-    document.querySelectorAll(".article-list")[lis].addEventListener("click", function ohnoes() {
-      let elem = this.querySelector('.article-content');
-      //controller.caller = this;
-      controller.caller.num = lis;
-      //view.hide();
-      //console.log(controller.caller.num);
-      //hide any visible article -this is how they are cached
-      if (elem) {
-        if (getComputedStyle(elem, null).display === 'none') {
-          view.hide();
-          elem.style.display = "inline-block";
-          view.paintActive(this);
-        } else {
-          elem.style.display = "none";
-          view.paintVisited(this)
-        }
-        controller.switchState();
-        //view.paintVisited(elem);
-      } else {
-        this.insertAdjacentHTML('beforeend', '<div class ="loader"><div>');
-        controller.getArticle(this.dataset.link,this);
-        view.hide();
-
-        //model.activeArticle.style.display = "none";
-      }
-
-    });
+    document.querySelectorAll(".article-list")[lis].addEventListener("click", listenClick(lis),false);
   };
 }
 
@@ -146,7 +159,8 @@ let controller = {
       .then(response => response.json())
       //.then(view.hideArticle)
       .then(this.addArticle)
-      .then(view.renderArticle);
+      .then(view.renderArticle)
+      .then (enableListenerBack(myParent));
       //.then (this.removePlaceholder(myParent));
   },
 

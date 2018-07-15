@@ -1,7 +1,10 @@
 const puppeteer = require('puppeteer');
 const onet = require('./onet');
+const helpers = require('./helpers');
+const setup = require('./routing_setup');
 
-(async () => {
+
+let scrape = async () => {
   const browser = await puppeteer.launch({headless: true});
   const page = await browser.newPage();
   await page.goto(onet.url);
@@ -9,46 +12,105 @@ const onet = require('./onet');
   let textsArrayRaw = await page.evaluate(onet.text);
   let linksArrayRaw = await page.evaluate(onet.link);
 
-  let trimMe = array => {
-    let newArray = [];
-    for (let entry of array) {
-      let start = entry.indexOf('http');
-      let end = entry.indexOf('data', -1);
-      newArray.push(entry.slice(start, end).trim());
-    }
-    return newArray;
-  };
-
-  let shortenMe = array => {
-    let index = array.indexOf("''");
-    if (index !== -1 && array[index].length < 4) { array.splice(index, 1); }
-    if (array.length > 16) { array.length = 16; }
-  };
-
-  shortenMe(textsArrayRaw);
-  linksArrayRaw = trimMe(linksArrayRaw);
-  shortenMe(linksArrayRaw);
-
-  console.log(textsArrayRaw);
-  console.log(linksArrayRaw);
-  let articlesArray = [];
-  let pagelink = [];
-  for (let [index, link] of linksArrayRaw.entries()) {
-    // console.log(index, link);
-    pagelink[index] = await browser.newPage();
-    await pagelink[index].goto(link);
-    // await pagelink[index].waitFor(1000);
-    let leadText = await pagelink[index].evaluate(() => {
-      let text = document.querySelector('#lead').innerText;
-      return text;
-    });
-    const paragraphArrayRaw = await pagelink[index].evaluate(() => [...document.querySelectorAll('#detail > .hyphenate')].map(elem => elem.innerText));
-    paragraphArrayRaw.pop();
-    paragraphArrayRaw.unshift(leadText);
-    articlesArray.push(paragraphArrayRaw);
-    // console.log(leadText);
-    // console.log(paragraphArrayRaw);
-  }
-  console.log(articlesArray[0]);
+  onet.shortenMe(textsArrayRaw);
+  linksArrayRaw = onet.trimMe(linksArrayRaw);
+  onet.shortenMe(linksArrayRaw);
+  let myJson = helpers.combineObj(textsArrayRaw, linksArrayRaw);
   browser.close();
-})();
+  let output = {
+    json: myJson,
+    title: textsArrayRaw,
+    time: new Date()
+  };
+  return output;
+};
+
+let routObj = setup.routingSetUp();
+let port = routObj.port;
+let app = routObj.app;
+app.get('/', (request, response) => {
+  scrape().then(function (result) {
+    //console.log(result);
+    response.render('home', {
+      name: '',
+      formatDate: function () {
+        let month = result.time.getMonth() + 1;
+        month = ('0' + month.toString()).slice(-2);
+        let day = ('0' + result.time.getDate().toString()).slice(-2);
+        let hour = ('0' + result.time.getHours().toString()).slice(-2);
+        let minute = ('0' + result.time.getMinutes().toString()).slice(-2);
+        let year = result.time.getFullYear();
+        return `${day}.${month}.${year}  ${hour}:${minute}`;
+      },
+      displayTarget: 'onet.pl',
+      displayData: result.title
+    });
+  });
+});
+
+let scrapeLink = async (req) => {
+  const browser = await puppeteer.launch({headless: true});
+  const page = await browser.newPage();
+  await page.goto(req);
+  let pagelink = [];
+  pagelink = await browser.newPage();
+  await pagelink.goto(req);
+  let leadText = await pagelink.evaluate(() => {
+    let text = document.querySelector('#lead').innerText;
+    return text;
+  });
+  let paragraphArrayRaw = await pagelink.evaluate(onet.article);
+  paragraphArrayRaw.pop();
+  paragraphArrayRaw.unshift(leadText);
+  // articlesArray.push(paragraphArrayRaw);
+  let myJson = helpers.objectifyArticle(paragraphArrayRaw);
+  browser.close();
+  return myJson;
+};
+
+app.get('/lolxd', (request, response) => {
+  scrape().then(function (result) {
+    //console.log(result);
+    response.render('test', {
+      name: '',
+      formatDate: function () {
+        let month = result.time.getMonth() + 1;
+        month = ('0' + month.toString()).slice(-2);
+        let day = ('0' + result.time.getDate().toString()).slice(-2);
+        let hour = ('0' + result.time.getHours().toString()).slice(-2);
+        let minute = ('0' + result.time.getMinutes().toString()).slice(-2);
+        let year = result.time.getFullYear();
+        return `${day}.${month}.${year}  ${hour}:${minute}`;
+      }
+      // displayTarget: 'onet.pl',
+      // displayData: result.title
+    });
+  });
+});
+
+app.get('/data', (request, response) => {
+  scrape().then(function (result) {
+    //console.log(result);
+    response.send(result.json);
+  });
+});
+
+
+app.get('/link', (request, response) => {
+  let req = request.query.link;
+  //console.log('ok');
+
+  scrapeLink(req).then(function (result) {
+    console.log(result);
+    response.send(result);
+  });
+});
+
+
+app.listen(port, (err) => {
+  if (err) {
+    return console.log('something bad happened', err);
+  }
+
+  console.log(`server is listening on ${port}`);
+});

@@ -12,7 +12,8 @@ module.exports = {
       master.push(entry);
     }
     wrapper.newsFeed = master;
-    return JSON.stringify(wrapper);
+    return wrapper;
+    // or return JSON.stringify(wrapper);
   },
   objectifyArticle: function (article) {
     let master = [];
@@ -25,5 +26,14 @@ module.exports = {
     }
     wrapper.articleEntry = master;
     return JSON.stringify(wrapper);
+  },
+  formatDate: function (result) {
+    let month = result.time.getMonth() + 1;
+    month = ('0' + month.toString()).slice(-2);
+    let day = ('0' + result.time.getDate().toString()).slice(-2);
+    let hour = ('0' + result.time.getHours().toString()).slice(-2);
+    let minute = ('0' + result.time.getMinutes().toString()).slice(-2);
+    let year = result.time.getFullYear();
+    return `${day}.${month}.${year}  ${hour}:${minute}`;
   }
 };
