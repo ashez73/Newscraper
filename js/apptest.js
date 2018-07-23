@@ -7,6 +7,7 @@ const setup = require('./routing_setup');
 let scrape = async () => {
   const browser = await puppeteer.launch({headless: true});
   const page = await browser.newPage();
+  // console.log('starting');
   await page.goto(onet.url);
 
   let textsArrayRaw = await page.evaluate(onet.text);
@@ -23,6 +24,7 @@ let scrape = async () => {
     links: linksArrayRaw,
     time: new Date()
   };
+  //  console.log(output);
   return output;
 };
 

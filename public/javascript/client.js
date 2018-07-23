@@ -4,8 +4,146 @@ console.log('Hello!');
 const url = 'http://localhost:3000/data/';
 const urlLink = 'http://localhost:3000/link/';
 const responseContainer = document.querySelector('ul');
-let html_content = '';
-let html_content2 = ''; 
+const articleList = document.querySelectorAll(".article-list");
+let htmlContent = '';
+let html_content2 = '';
+
+let model = {
+  articleList: document.querySelectorAll(".article-list"),
+  urlLink: 'http://localhost:3000/link/',
+  htmlContent: '',
+  pending: false,
+  current: false
+};
+
+let view = {
+  renderArticle: caller => {
+    caller.insertAdjacentHTML('beforeend', model.htmlContent);
+    view.adjustColors.check(caller);
+    controller.removePlaceholder(caller);
+    model.pending = false;
+    model.current = caller;
+  },
+  adjustColors: {
+    visited: caller => {
+      caller.classList.add('visited');
+      caller.classList.remove('active');
+    },
+    active: caller => {
+      caller.classList.add('active');
+      caller.classList.remove('visited');
+    },
+    activate: caller => {
+      caller.classList.add('active');
+      caller.classList.remove('standard');
+    },
+    check: function (caller) {
+      if (caller.classList.contains('standard')) {
+       this.activate(caller);
+      }
+      else if (caller.classList.contains('active')) {
+        this.visited(caller);
+      }
+      else {
+        this.active(caller);
+      }
+      // caller.classList.add('active');
+      //triggerLink.classList.add('active');
+    }
+  },
+  toggleArticle: caller => {
+    caller.style.display != "none" ? caller.style.display = "none" : caller.style.display = "inline-block";
+  },
+  clearOther: caller => {
+    for (let article of articleList) {
+      if ((article !== caller) && (article.querySelector('.article-content'))) {
+        article.querySelector('.article-content').style.display = 'none';
+        if (article.classList.contains('active')) {
+          new view.adjustColors(article).visited(caller);
+        }
+      }
+
+    };
+  },
+  clearCurrent: () => {
+    console.log('opp');
+    if (model.current){
+    view.toggleArticle(model.current);
+    view.adjustColors.visited(model.current);
+    }
+  }
+
+}
+let controller = {
+  init: function () { this.listenersOn() },
+  listenersOn: () => {
+    for (let article of articleList) {
+      article.addEventListener("click", controller.listenClick);
+    };
+  },
+  listenClick: function () {
+    //console.log(this);
+    let innerElem = this.querySelector('.article-content');
+    if (!model.pending) {
+      if (innerElem) {
+        view.toggleArticle(innerElem);
+        view.adjustColors.check(this);
+      }
+      else {
+        this.insertAdjacentHTML('beforeend', '<div class ="loader"><div>');
+        this.removeEventListener("click", controller.listenClick);
+        model.pending = 'true';
+        controller.getArticle(this);
+      }
+      //view.clearOther(this);
+      view.clearCurrent();
+    }
+  },
+  enableListenerBack: caller => { caller.addEventListener("click", controller.listenClick) },
+  getArticle: async function (caller) {
+    console.log('getting');
+    fetch(`${urlLink}?link=${caller.dataset.link}`)
+      .then(response => response.json())
+      //.then(this.addArticle)
+      .then(
+        data => {
+          this.addArticle(data);
+          view.renderArticle(caller);
+          this.enableListenerBack(caller);
+        }
+      )
+    // .then (this.enableListenerBack(caller));
+  },
+  addArticle: data => {
+    model.htmlContent = data.articleEntry.map(articles => `
+  <p class = 'article-part'>${articles.article}</p>`).join('');
+    model.htmlContent = `<ul class ='article-content'> ${model.htmlContent}</ul>`;
+    // console.log(model.htmlContent);
+    // console.log('got it!');
+    return;
+  },
+  removePlaceholder: function (caller) {
+    caller.removeChild(caller.querySelector('.loader'));
+  }
+};
+
+controller.init();
+/*
+function listenersOn(arrayLen) {
+  console.log('chuj');
+  for (let lis = 0; lis < arrayLen; lis++) {
+    articleList[lis].addEventListener("click", listenClick);
+    //{
+    //  console.log(this); 
+   // }
+  };
+}
+function listenClick(){
+  console.log(this);
+}
+
+listenersOn(16);
+*/
 /*
 fetch(('http://localhost:3000/data/'), {
     //body:JSON.stringify(data),
@@ -178,3 +316,4 @@ let controller = {
     //return controller.callerContainer;
   }
 }
+*/
