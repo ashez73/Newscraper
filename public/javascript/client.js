@@ -13,7 +13,17 @@ let model = {
   urlLink: 'http://localhost:3000/link/',
   htmlContent: '',
   pending: false,
-  current: false
+  current: false,
+  toggleCurrent: function (caller) {
+    //console.log (this.current); 
+    if (this.current) {
+      this.current === caller ? this.current = false : this.current = caller;
+      //console.log(this.current);
+    }
+    else {
+      this.current = caller;
+    }
+  },
 };
 
 let view = {
@@ -39,7 +49,7 @@ let view = {
     },
     check: function (caller) {
       if (caller.classList.contains('standard')) {
-       this.activate(caller);
+        this.activate(caller);
       }
       else if (caller.classList.contains('active')) {
         this.visited(caller);
@@ -52,8 +62,11 @@ let view = {
     }
   },
   toggleArticle: caller => {
+    // console.log(caller.style.display);
     caller.style.display != "none" ? caller.style.display = "none" : caller.style.display = "inline-block";
+    // console.log(caller.style.display);
   },
+
   clearOther: caller => {
     for (let article of articleList) {
       if ((article !== caller) && (article.querySelector('.article-content'))) {
@@ -65,11 +78,16 @@ let view = {
 
     };
   },
-  clearCurrent: () => {
-    console.log('opp');
-    if (model.current){
-    view.toggleArticle(model.current);
-    view.adjustColors.visited(model.current);
+  clearCurrent: caller => {
+    console.log(model.current);
+    console.log(caller);
+
+
+    if (model.current && model.current !== caller) {
+      let articleDisplay = model.current.querySelector('.article-content');
+      // console.log(articleDisplay);
+      view.toggleArticle(articleDisplay);
+      view.adjustColors.visited(model.current);
     }
   }
 
@@ -82,21 +100,42 @@ let controller = {
     };
   },
   listenClick: function () {
-    //console.log(this);
     let innerElem = this.querySelector('.article-content');
+    //console.log (innerElem);
     if (!model.pending) {
+
       if (innerElem) {
-        view.toggleArticle(innerElem);
-        view.adjustColors.check(this);
+        if (model.current === false) {
+          console.log('changing same element');
+          //  console.log(innerElem);
+          view.toggleArticle(innerElem);
+          view.adjustColors.check(this);
+          model.toggleCurrent(this);
+        }
+        else if (model.current === this) {
+          console.log('changing');
+          //  console.log(innerElem);
+          view.toggleArticle(innerElem);
+          view.adjustColors.check(this);
+          model.toggleCurrent(this);
+        }
+        else {
+          console.log('yeah');
+          view.clearCurrent(this);
+          view.toggleArticle(innerElem);
+          view.adjustColors.check(this);
+          model.toggleCurrent(this);
+        }
       }
       else {
         this.insertAdjacentHTML('beforeend', '<div class ="loader"><div>');
         this.removeEventListener("click", controller.listenClick);
         model.pending = 'true';
         controller.getArticle(this);
+        view.clearCurrent(this);
       }
       //view.clearOther(this);
-      view.clearCurrent();
+      //view.clearCurrent(this);
     }
   },
   enableListenerBack: caller => { caller.addEventListener("click", controller.listenClick) },
