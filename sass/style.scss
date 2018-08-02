@@ -5,54 +5,44 @@ $secondary: #ee020a;
 $secondary-dark: #b20000;
 $secondary-light: #ff573a;
 $primarybground: white;
+$alternatebground: lightgray;
 $ink: black;
 $ink-inv: white;
 $ink-alt: DarkCyan;
+$font-primary: 'Open Sans', sans-serif;
+$vaguelight: #eee;
+
 html,
 body {
   margin: 0;
   padding: 0;
 }
-
 html {
-  width: 100%;
-  height: 100%;
-  background-color: lightgray;
-  font-size: 1rem;
-}
-
+  background-color: $alternatebground;
+} 
 body {
-  font-family: 'Roboto', sans-serif;
-  font-size: 0.9rem;
-  color: #000;
-  -webkit-font-smoothing: antialiased;
-  font-family: 'Haelvetica', sans-serif;
-  font-family: 'Open Sans', sans-serif;
+  font: 0.9rem $font-primary;
+  color:$ink;
 }
-
 .loader {
   margin: auto;
   text-align:center;
   border: 6px solid $primary-light;
   border-radius: 50%;
   border-top: 6px solid $primary-dark;
-  //border-bottom: 6px solid $primary-light;
   width: 40px;
   height: 40px;
   -webkit-animation: spin 1s linear infinite;
   animation: spin 1s linear infinite;
 }
-
 @-webkit-keyframes spin {
   0% { -webkit-transform: rotate(0deg); }
   100% { -webkit-transform: rotate(360deg); }
 }
-
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-
 .entry {
   margin: auto;
   width: 40%;
@@ -60,25 +50,21 @@ body {
   background-color: #f3f3f3;
   border-radius: 5px;
   box-shadow: 2px 2px 4px 2px #bbb;
-  text-align: center;
-  
+  text-align: center; 
 }
 li {
   list-style-type: none;
 }
 li.article-list {
-  
   padding: 3px 20px;
   margin: 0;
-  //background-color: white;
-  border-bottom: 1px solid #f3f3f3;
+  border-bottom: 1px solid $vaguelight;
   position: relative;
-  cursor: context-menu;
+  cursor: pointer;
   -webkit-transition: background-color 2s;
   transition: background-color 2s;
   text-align: left;
 }
-
 .standard {
   background-color: $primarybground;
   color: $ink;
@@ -87,21 +73,17 @@ li.article-list {
   background-color:$primary;
   color: $ink-inv;
 }
-
 .visited {
   background-color: $primarybground;
   color: $ink-alt;
 }
-
 li.article-list:hover, li.article-list-visited:hover {
   background-color: $primary-dark;
   color: white;
 }
-
 li.article-list-visited {
 color: DarkCyan;
 }
-
 li::before {
   content: "\00BB";
   content: "\1F892";
@@ -109,11 +91,9 @@ li::before {
   left: -8px;
   color: $secondary;
 }
-
 li:hover::before {
   color: white;
 }
-
 li:first-of-type {
   border-top: 2px solid $secondary;
 }
@@ -121,7 +101,6 @@ li:first-of-type {
 li:last-of-type {
   border-bottom: 2px solid $secondary;
 }
-
 li.article-part {
   //list-style-type: none;
 }
@@ -130,6 +109,9 @@ li.article-part::before {
   content: '';
 }
 
+p {
+  overflow:hidden;
+}
 
 ul {
   margin: 10px;
@@ -141,7 +123,7 @@ ul.article-content {
   color: $ink;
   opacity: 1;
   transition: opacity 2s;
-  display: inline-block;
+  display: block;
  
   //overflow: auto;
   //height: 20rem;

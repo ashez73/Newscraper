@@ -3,7 +3,6 @@ const onet = require('./onet');
 const helpers = require('./helpers');
 const setup = require('./routing_setup');
 
-
 let scrape = async () => {
   const browser = await puppeteer.launch({headless: true});
   const page = await browser.newPage();
@@ -20,33 +19,11 @@ let scrape = async () => {
   let output = {
     json: myJson,
     title: textsArrayRaw,
+    links: linksArrayRaw,
     time: new Date()
   };
   return output;
 };
-
-let routObj = setup.routingSetUp();
-let port = routObj.port;
-let app = routObj.app;
-app.get('/', (request, response) => {
-  scrape().then(function (result) {
-    //console.log(result);
-    response.render('home', {
-      name: '',
-      formatDate: function () {
-        let month = result.time.getMonth() + 1;
-        month = ('0' + month.toString()).slice(-2);
-        let day = ('0' + result.time.getDate().toString()).slice(-2);
-        let hour = ('0' + result.time.getHours().toString()).slice(-2);
-        let minute = ('0' + result.time.getMinutes().toString()).slice(-2);
-        let year = result.time.getFullYear();
-        return `${day}.${month}.${year}  ${hour}:${minute}`;
-      },
-      displayTarget: 'onet.pl',
-      displayData: result.title
-    });
-  });
-});
 
 let scrapeLink = async (req) => {
   const browser = await puppeteer.launch({headless: true});
@@ -62,51 +39,31 @@ let scrapeLink = async (req) => {
   let paragraphArrayRaw = await pagelink.evaluate(onet.article);
   paragraphArrayRaw.pop();
   paragraphArrayRaw.unshift(leadText);
-  // articlesArray.push(paragraphArrayRaw);
   let myJson = helpers.objectifyArticle(paragraphArrayRaw);
   browser.close();
   return myJson;
 };
 
-app.get('/lolxd', (request, response) => {
+let routObj = setup.routingSetUp();
+let port = routObj.port;
+let app = routObj.app;
+
+app.get('/', (request, response) => {
   scrape().then(function (result) {
-    //console.log(result);
-    response.render('test', {
+    response.render('home', {
       name: '',
-      formatDate: function () {
-        let month = result.time.getMonth() + 1;
-        month = ('0' + month.toString()).slice(-2);
-        let day = ('0' + result.time.getDate().toString()).slice(-2);
-        let hour = ('0' + result.time.getHours().toString()).slice(-2);
-        let minute = ('0' + result.time.getMinutes().toString()).slice(-2);
-        let year = result.time.getFullYear();
-        return `${day}.${month}.${year}  ${hour}:${minute}`;
-      }
-      // displayTarget: 'onet.pl',
-      // displayData: result.title
+      displayData: result.json,
+      acquired: helpers.formatDate(result)
     });
   });
 });
 
-app.get('/data', (request, response) => {
-  scrape().then(function (result) {
-    //console.log(result);
-    response.send(result.json);
-  });
-});
-
-
 app.get('/link', (request, response) => {
   let req = request.query.link;
-  //console.log('ok');
-
   scrapeLink(req).then(function (result) {
-    console.log(result);
     response.send(result);
   });
 });
-
-
 app.listen(port, (err) => {
   if (err) {
     return console.log('something bad happened', err);
