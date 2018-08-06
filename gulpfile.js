@@ -34,6 +34,11 @@ gulp.task('styles', () => {
     }))
     .pipe(gulp.dest('./public/css'));
 });
+gulp.task('uglify-client', function () {
+  return gulp.src('public/javascript/client.js')
+    .pipe(uglify())
+    .pipe(gulp.dest('production/public/javascript/'));
+});
 gulp.task('prod', gulp.series('copy-public', 'copy-views', 'scripts', function (done) {
   // do more stuff
   done();
