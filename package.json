@@ -2,7 +2,7 @@
   "name": "inst-eks",
   "version": "1.0.0",
   "description": "",
-  "main": "./js/apptest.js",
+  "main": "./js/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -24,7 +24,7 @@
     "gulp-autoprefixer": "^5.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-sass": "^4.0.1",
-    "gulp-uglify": "^3.0.0",
+    "gulp-uglify-es": "^1.0.4",
     "install": "^0.11.1",
     "nodemon": "^1.17.5"
   }

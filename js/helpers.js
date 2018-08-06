@@ -13,7 +13,6 @@ module.exports = {
     }
     wrapper.newsFeed = master;
     return wrapper;
-    // or return JSON.stringify(wrapper);
   },
   objectifyArticle: function (article) {
     let master = [];
