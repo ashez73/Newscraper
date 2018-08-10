@@ -1,24 +1,22 @@
 h4, h5, h6 {
   text-transform: uppercase;
-  margin: 0 20px;
+  margin: 0px auto;
   font-weight: 400;
   text-align: center; }
 
 html, body {
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  font: 0.9rem "Open Sans",sans-serif;
+  color: #000; }
 
 html {
   background-color: #d3d3d3;
   -webkit-box-sizing: border-box;
           box-sizing: border-box; }
 
-body {
-  font: 0.9rem "Open Sans",sans-serif;
-  color: #000; }
-
 .loader {
-  margin: auto;
+  margin: 5px auto;
   text-align: center;
   border: 6px solid #5ce0ec;
   border-radius: 50%;
@@ -180,19 +178,26 @@ header {
 img {
   width: 80%; }
 
-input[type="number"] {
-  height: 1rem;
-  width: 40px;
-  font-size: 0.8rem;
-  vertical-align: text-bottom; }
+@media only screen and (max-width: 479px) {
+  .entry {
+    width: 100%; }
+  .gitlink {
+    margin: 10px; }
+  h4 {
+    margin-bottom: 30px; } }
 
-input[type="submit"] {
-  height: 1rem;
-  width: 70px;
-  font-size: 0.7rem;
-  vertical-align: text-bottom;
-  padding: 1px 3px; }
+@media only screen and (min-width: 479px) and (max-width: 535px) {
+  .entry {
+    width: 85%; }
+  .gitlink {
+    margin: 20px; }
+  h4 {
+    margin-bottom: 20px; } }
 
-.refresher {
-  font-size: 0.7rem;
-  background-color: #00aeba; }
+@media only screen and (min-width: 536px) and (max-width: 968px) {
+  .entry {
+    width: 70%; }
+  .gitlink {
+    margin: 10px; }
+  h4 {
+    margin-bottom: 30px; } }
