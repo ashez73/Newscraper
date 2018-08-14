@@ -6,7 +6,7 @@ let routObj = setup.routingSetUp();
 let port = routObj.port;
 let app = routObj.app;
 let scrape = async () => {
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
   const page = await browser.newPage();
   await page.goto(onet.url);
   let textsArrayRaw = await page.evaluate(onet.text);
