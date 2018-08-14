@@ -2,9 +2,9 @@
   "name": "inst-eks",
   "version": "1.0.0",
   "description": "",
-  "main": "./js/app.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node js/app.js"
+    
   },
   "author": "Ashez73",
   "license": "ISC",
