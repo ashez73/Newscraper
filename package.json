@@ -2,7 +2,7 @@
   "name": "inst-eks",
   "version": "1.0.0",
   "description": "",
-  "main": "./production/js/app.js",
+  "main": "./js/app.js",
   "scripts": {
     "start": "node js/app.js"
   },
