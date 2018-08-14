@@ -4,7 +4,7 @@
   "description": "",
   "main": "./production/js/app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node js/app.js"
   },
   "author": "Ashez73",
   "license": "ISC",
