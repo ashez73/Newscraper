@@ -4,7 +4,10 @@ const exphbs = require('express-handlebars');
 
 exports.routingSetUp = () => {
   const app = express();
-  const port = 3000;
+  // local only
+  // const port = 5000;
+  // or heroku
+  const port = process.env.PORT || 5000;
   app.engine('.hbs', exphbs({
     defaultLayout: 'main',
     extname: '.hbs',

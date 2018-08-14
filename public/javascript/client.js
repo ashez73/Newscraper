@@ -1,7 +1,10 @@
 /* eslint-disable */
 // TODO resolving errors
 console.log('Hello!');
-const urlLink = 'http://localhost:3000/link/';
+// local
+// const urlLink = 'http://localhost:5000/link/';
+// heroku
+const urlLink = 'https://myscrapperxxxx.herokuapp.com/link/';
 const responseContainer = document.querySelector('ul');
 const articleList = document.querySelectorAll(".article-list");
 let htmlContent = '';
