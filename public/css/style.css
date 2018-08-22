@@ -7,11 +7,13 @@ h4, h5, h6 {
 html, body {
   margin: 0;
   padding: 0;
-  font: 0.9rem "Open Sans",sans-serif;
+  font: 0.95rem "Fira Sans",sans-serif;
   color: #000; }
 
 html {
   background-color: #d3d3d3;
+  background-image: -webkit-gradient(linear, left top, right top, from(white), color-stop(lightgray), color-stop(lightgray), to(white));
+  background-image: linear-gradient(to right, white, lightgray, lightgray, white);
   -webkit-box-sizing: border-box;
           box-sizing: border-box; }
 
@@ -83,7 +85,7 @@ li.article-list {
             transform: translate(0, 500px); } }
 
 .active {
-  background-color: #00aeba;
+  background-color: #045c74;
   color: #fff; }
 
 .visited {
@@ -101,17 +103,17 @@ li::before {
   content: "\1F892";
   position: relative;
   left: -8px;
-  color: #ee020a;
+  color: #741c04;
   margin-left: 5px; }
 
 li:hover::before {
   color: white; }
 
 li:first-of-type {
-  border-top: 2px solid #ee020a; }
+  border-top: 2px solid #741c04; }
 
 li:last-of-type {
-  border-bottom: 2px solid #ee020a; }
+  border-bottom: 2px solid #741c04; }
 
 p {
   overflow: hidden; }
@@ -152,7 +154,7 @@ header {
   margin-bottom: 20px;
   margin-bottom: 50px;
   height: 90px;
-  background-color: #007e8a;
+  background-color: #045c74;
   text-align: center;
   color: #fff;
   border-bottom: 1px solid #fff;
@@ -166,7 +168,7 @@ header {
 .insert {
   max-width: 50%;
   margin: auto;
-  color: #007e8a; }
+  color: #045c74; }
 
 .gitlink {
   float: right;

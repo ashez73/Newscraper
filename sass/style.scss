@@ -1,7 +1,9 @@
 $primary: #00aeba;
+$primary: #045c74;
 $primary-dark: #007e8a;
 $primary-light: #5ce0ec;
 $secondary: #ee020a;
+$secondary: #741c04;
 $secondary-dark: #b20000;
 $secondary-light: #ff573a;
 $primarybground: white;
@@ -9,7 +11,7 @@ $alternatebground: lightgray;
 $ink: black;
 $ink-inv: white;
 $ink-alt: DarkCyan;
-$font-primary: 'Open Sans', sans-serif;
+$font-primary: 'Fira Sans', sans-serif;
 $vaguelight: #eee;
 
 %format-headers {
@@ -22,11 +24,12 @@ html,
 body {
   margin: 0;
   padding: 0;
-  font: 0.9rem $font-primary;
+  font: 0.95rem $font-primary;
   color:$ink;
 }
 html {
   background-color: $alternatebground;
+  background-image: linear-gradient(to right, white,lightgray,lightgray, white);
   box-sizing: border-box;
 } 
 
@@ -151,7 +154,7 @@ header {
   margin-bottom: 20px;
   margin-bottom:50px;
   height: 90px;
-  background-color: $primary-dark;
+  background-color: $primary;
   text-align: center;
   color:$ink-inv;
   border-bottom: 1px solid $ink-inv;
@@ -165,7 +168,8 @@ header {
 .insert {
   max-width: 50%;
   margin: auto;
-  color: $primary-dark;}
+  color: $primary;
+}
 
 .gitlink{
   float:right;
