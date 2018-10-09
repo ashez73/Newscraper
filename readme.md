@@ -1,5 +1,5 @@
 # Newscraper by Ashez
-**Serverside node.js webscraper build with Puppeteer, Express and Handlebars.**
+**Serverside node.js webscraper built with Puppeteer, Express and Handlebars.**
 
 ## Disclaimer
 This application is a programming excercise, it is not intended to interfere with anyone's intellectual property.
